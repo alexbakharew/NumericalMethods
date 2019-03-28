@@ -47,7 +47,7 @@ std::vector<double> LU::SolveEqutation(const std::vector<double> &b)
     // Ax = b, LUx = b
     // Ly = b, Ux = y
     std::vector<double> y(dim, 0);
-    y[0] = L[0][0];
+    y[0] = b[0];
     for(int i = 1; i < dim; ++i)
     {
         double res = b[i];
@@ -57,23 +57,17 @@ std::vector<double> LU::SolveEqutation(const std::vector<double> &b)
         }
         y[i] = res;
     }
-    std::vector<double> x(dim);
+    std::vector<double> x(dim, 0);
 
-    for(int i = dim - 1; i >= 0; --i)
+    x[dim - 1] = y[dim - 1] / U[dim - 1][dim - 1];
+    for(int i = dim - 2; i >= 0; --i)
     {
         double res = y[i];
-        for(int j = 0; j < )
+        for(int j = i + 1; j < dim; ++j)
+        {
+            res -= U[i][j] * x[j];
+        }
+        x[i] = res / U[i][i];
     }
-
-
-
-
-
-
-
-
-
-
-
-
+    return x;
 }
