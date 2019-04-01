@@ -59,7 +59,23 @@ std::istream& operator >> (std::istream& is, Matrix& m)
     }
     return is;
 }
-
+Matrix Matrix::operator*(Matrix &other)
+{
+    Matrix answer(dim);
+    for(int i = 0; i < dim; ++i)
+    {
+        for(int j = 0; j < dim; ++j)
+        {
+            double res = 0;
+            for(int k = 0; k < dim; ++k)
+            {
+                res += matrix[i][k] * other.matrix[k][j];
+            }
+            answer[i][j] = res;
+        }
+    }
+    return answer;
+}
 
 
 

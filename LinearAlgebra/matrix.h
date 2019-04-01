@@ -15,6 +15,7 @@ public:
     friend std::istream& operator >> (std::istream&, Matrix&);
     void operator= (const Matrix&);
 //    std::vector<double>& operator[] (uint32_t) const;
+    Matrix operator* (Matrix&);
     std::vector<double>& operator[] (uint32_t);
 public:
     inline uint32_t GetDim() const {return dim;}

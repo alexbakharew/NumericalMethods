@@ -12,13 +12,15 @@ int main()
     std::cout << "Matrix U\n" << U;
     std::cout << "d = " << lu.Determinator() << std::endl;
 
-    std::vector<double> b{12, 13, 14};
-    auto solve = lu.SolveEqutation(b);
-    std::cout << "x = ";
-    for(auto i : solve)
-    {
-        std::cout << i << " ";
-    }
-    std::cout << "\n";
+    Matrix mult = L * U;
+    std::cout << "Matrix L * U\n" << mult;
+//    std::vector<double> b{2, 5, 6};
+//    auto solve = lu.SolveEqutation(b);
+//    std::cout << "x = ";
+//    for(auto i : solve)
+//    {
+//        std::cout << i << " ";
+//    }
+//    std::cout << "\n";
     return 0;
 }

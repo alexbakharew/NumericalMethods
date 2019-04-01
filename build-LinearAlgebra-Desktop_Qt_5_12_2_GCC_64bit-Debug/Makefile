@@ -53,9 +53,11 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../LinearAlgebra/main.cpp \
-		../LinearAlgebra/lu.cpp 
+		../LinearAlgebra/lu.cpp \
+		../LinearAlgebra/tridiagonal.cpp 
 OBJECTS       = main.o \
-		lu.o
+		lu.o \
+		tridiagonal.o
 DIST          = /opt/Qt/5.12.2/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt/5.12.2/gcc_64/mkspecs/common/unix.conf \
 		/opt/Qt/5.12.2/gcc_64/mkspecs/common/linux.conf \
@@ -226,8 +228,10 @@ DIST          = /opt/Qt/5.12.2/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt/5.12.2/gcc_64/mkspecs/features/yacc.prf \
 		/opt/Qt/5.12.2/gcc_64/mkspecs/features/lex.prf \
 		../LinearAlgebra/LinearAlgebra.pro matrix.h \
-		lu.h ../LinearAlgebra/main.cpp \
-		../LinearAlgebra/lu.cpp
+		lu.h \
+		tridiagonal.h ../LinearAlgebra/main.cpp \
+		../LinearAlgebra/lu.cpp \
+		../LinearAlgebra/tridiagonal.cpp
 QMAKE_TARGET  = LinearAlgebra
 DESTDIR       = 
 TARGET        = LinearAlgebra
@@ -624,12 +628,17 @@ compiler_clean:
 ####### Compile
 
 main.o: ../LinearAlgebra/main.cpp ../LinearAlgebra/matrix.cpp \
-		../LinearAlgebra/matrix.h
+		../LinearAlgebra/matrix.h \
+		../LinearAlgebra/lu.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../LinearAlgebra/main.cpp
 
 lu.o: ../LinearAlgebra/lu.cpp ../LinearAlgebra/lu.h \
 		../LinearAlgebra/matrix.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o lu.o ../LinearAlgebra/lu.cpp
+
+tridiagonal.o: ../LinearAlgebra/tridiagonal.cpp ../LinearAlgebra/tridiagonal.h \
+		../LinearAlgebra/matrix.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tridiagonal.o ../LinearAlgebra/tridiagonal.cpp
 
 ####### Install
 
