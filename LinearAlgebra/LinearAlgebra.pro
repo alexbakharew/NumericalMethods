@@ -8,9 +8,11 @@ SOURCES += \
         main.cpp \
     matrix.cpp \
     lu.cpp \
-    tridiagonal.cpp
+    tridiagonal.cpp \
+    logger.cpp
 
 HEADERS += \
     matrix.h \
     lu.h \
-    tridiagonal.h
+    tridiagonal.h \
+    logger.h

@@ -48,7 +48,7 @@ std::ostream& operator << (std::ostream& os, Matrix& m)
 }
 std::istream& operator >> (std::istream& is, Matrix& m)
 {
-    std::cin >> m.dim;
+    is >> m.dim;
     m.matrix.assign(m.dim, std::vector<double>(m.dim, 0));
     for(uint32_t i = 0; i < m.dim; ++i)
     {

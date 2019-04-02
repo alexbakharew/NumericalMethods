@@ -1,25 +1,49 @@
+#include <chrono>
 #include "lu.h"
 #include "matrix.h"
+#include "logger.h"
+
 LU::~LU(){}
-LU::LU(const Matrix& l, const Matrix& u) : L(l), U(u), dim(L.GetDim()){}
+LU::LU(const Matrix& l, const Matrix& u, const std::vector<int> p) : L(l), U(u), P(p), dim(L.GetDim()){}
 LU::LU(const Matrix& m)
 {
+    Logger log_file("../LinearAlgebra/Logs/lu.txt");
     dim = m.GetDim();
     U = m;
     L = Matrix(dim, 0);
+    P = std::vector<int>(dim, 0);
     for(uint32_t i = 0; i < dim; ++i)
     {
+        int max_index = i;
+        for(int t = i; t < dim; ++t)
+        {
+            if(U[t][i] > U[max_index][i])
+                max_index = t;
+        }
+        if(U[max_index][i] != 0)
+        {
+            std::swap(U[i], U[max_index]);
+            std::swap(L[i], L[max_index]);
+            P[i] = max_index;
+        }
+        else
+            continue;
         L[i][i] = 1;
         for(uint32_t j = i + 1; j < dim; ++j)
         {
             double m = U[j][i] / U[i][i];
-            U[j][i] = 0;
+//            U[j][i] = 0;
             L[j][i] = m;
-            for(uint32_t k = i + 1; k < dim; ++k)
+            for(uint32_t k = i; k < dim; ++k)
             {
                 U[j][k] -= m * U[i][k];
             }
         }
+        log_file.Write("L");
+        log_file.Write(L);
+        log_file.Write("U");
+        log_file.Write(U);
+        log_file.Write("-----------");
     }
 }
 
@@ -32,6 +56,10 @@ Matrix LU::GetU() const
     return U;
 }
 
+std::vector<int> LU::GetP() const
+{
+    return P;
+}
 double LU::Determinator()
 {
     double d = 1;

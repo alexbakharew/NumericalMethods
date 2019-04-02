@@ -6,12 +6,12 @@ class Tridiagonal
 {
 public:
     Tridiagonal(){}
-    Tridiagonal( Matrix& m);
+    Tridiagonal(Matrix& m);
 
-    std::vector<double> SolveEqutation(std::vector<double>& b);
-
+    std::vector<double> SolveEqutation(const std::vector<double>& b);
+    friend class Logger;
 private:
-    std::vector<std::vector<int>> coeffs;// tridiagonal matrix
+    std::vector<std::vector<double>> coeffs;// tridiagonal matrix
     uint32_t dim;
 };
 
