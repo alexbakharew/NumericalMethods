@@ -1,17 +1,26 @@
 #include <chrono>
+#include <numeric>
 #include "lu.h"
 #include "matrix.h"
 #include "logger.h"
 
 LU::~LU(){}
-LU::LU(const Matrix& l, const Matrix& u, const std::vector<int> p) : L(l), U(u), P(p), dim(L.GetDim()){}
+LU::LU(const Matrix& l, const Matrix& u, const std::vector<double> p) : L(l), U(u), P(p), dim(L.GetDim()){}
 LU::LU(const Matrix& m)
 {
     Logger log_file("../LinearAlgebra/Logs/lu.txt");
     dim = m.GetDim();
     U = m;
     L = Matrix(dim, 0);
-    P = std::vector<int>(dim, 0);
+
+    log_file.Write("Initial L matrix");
+    log_file.Write(L);
+    log_file.Write("Initial U matrix");
+    log_file.Write(U);
+
+    P = std::vector<double>(dim);
+    std::iota(P.begin(), P.end(), 0);
+
     for(uint32_t i = 0; i < dim; ++i)
     {
         int max_index = i;
@@ -20,14 +29,16 @@ LU::LU(const Matrix& m)
             if(U[t][i] > U[max_index][i])
                 max_index = t;
         }
+
         if(U[max_index][i] != 0)
         {
             std::swap(U[i], U[max_index]);
             std::swap(L[i], L[max_index]);
-            P[i] = max_index;
+            std::swap(P[i], P[max_index]);
         }
         else
             continue;
+
         L[i][i] = 1;
         for(uint32_t j = i + 1; j < dim; ++j)
         {
@@ -39,6 +50,7 @@ LU::LU(const Matrix& m)
                 U[j][k] -= m * U[i][k];
             }
         }
+
         log_file.Write("L");
         log_file.Write(L);
         log_file.Write("U");
@@ -51,16 +63,18 @@ Matrix LU::GetL() const
 {
     return L;
 }
+
 Matrix LU::GetU() const
 {
     return U;
 }
 
-std::vector<int> LU::GetP() const
+Vector LU::GetP() const
 {
-    return P;
+    return Vector(P);
 }
-double LU::Determinator()
+
+double LU::Determinator() const
 {
     double d = 1;
     for(int i = 0; i < dim; ++i)
@@ -70,7 +84,7 @@ double LU::Determinator()
     return d;
 }
 
-std::vector<double> LU::SolveEqutation(const std::vector<double> &b)
+Vector LU::SolveEqutation(const Vector &b) const
 {
     // Ax = b, LUx = b
     // Ly = b, Ux = y
@@ -97,5 +111,35 @@ std::vector<double> LU::SolveEqutation(const std::vector<double> &b)
         }
         x[i] = res / U[i][i];
     }
-    return x;
+    return Vector(x);
 }
+
+Matrix LU::Reverse() const
+{
+    UnitMatrix E(dim);
+    std::vector<Vector> m;
+
+    for(int i = 0; i < dim; ++i)
+    {
+        m.push_back(SolveEqutation(Vector(E[i])));
+    }
+    return Matrix(m, dim).Transposing();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

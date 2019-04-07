@@ -55,11 +55,13 @@ OBJECTS_DIR   = ./
 SOURCES       = ../LinearAlgebra/main.cpp \
 		../LinearAlgebra/lu.cpp \
 		../LinearAlgebra/tridiagonal.cpp \
-		../LinearAlgebra/logger.cpp 
+		../LinearAlgebra/logger.cpp \
+		../LinearAlgebra/simpleiteration.cpp 
 OBJECTS       = main.o \
 		lu.o \
 		tridiagonal.o \
-		logger.o
+		logger.o \
+		simpleiteration.o
 DIST          = /opt/Qt/5.12.2/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt/5.12.2/gcc_64/mkspecs/common/unix.conf \
 		/opt/Qt/5.12.2/gcc_64/mkspecs/common/linux.conf \
@@ -232,10 +234,12 @@ DIST          = /opt/Qt/5.12.2/gcc_64/mkspecs/features/spec_pre.prf \
 		../LinearAlgebra/LinearAlgebra.pro matrix.h \
 		lu.h \
 		tridiagonal.h \
-		logger.h ../LinearAlgebra/main.cpp \
+		logger.h \
+		simpleiteration.h ../LinearAlgebra/main.cpp \
 		../LinearAlgebra/lu.cpp \
 		../LinearAlgebra/tridiagonal.cpp \
-		../LinearAlgebra/logger.cpp
+		../LinearAlgebra/logger.cpp \
+		../LinearAlgebra/simpleiteration.cpp
 QMAKE_TARGET  = LinearAlgebra
 DESTDIR       = 
 TARGET        = LinearAlgebra
@@ -634,11 +638,14 @@ compiler_clean:
 main.o: ../LinearAlgebra/main.cpp ../LinearAlgebra/matrix.cpp \
 		../LinearAlgebra/matrix.h \
 		../LinearAlgebra/lu.h \
-		../LinearAlgebra/tridiagonal.h
+		../LinearAlgebra/tridiagonal.h \
+		../LinearAlgebra/simpleiteration.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../LinearAlgebra/main.cpp
 
 lu.o: ../LinearAlgebra/lu.cpp ../LinearAlgebra/lu.h \
-		../LinearAlgebra/matrix.h
+		../LinearAlgebra/matrix.h \
+		../LinearAlgebra/logger.h \
+		../LinearAlgebra/tridiagonal.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o lu.o ../LinearAlgebra/lu.cpp
 
 tridiagonal.o: ../LinearAlgebra/tridiagonal.cpp ../LinearAlgebra/tridiagonal.h \
@@ -649,6 +656,10 @@ logger.o: ../LinearAlgebra/logger.cpp ../LinearAlgebra/logger.h \
 		../LinearAlgebra/matrix.h \
 		../LinearAlgebra/tridiagonal.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o logger.o ../LinearAlgebra/logger.cpp
+
+simpleiteration.o: ../LinearAlgebra/simpleiteration.cpp ../LinearAlgebra/matrix.h \
+		../LinearAlgebra/simpleiteration.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o simpleiteration.o ../LinearAlgebra/simpleiteration.cpp
 
 ####### Install
 

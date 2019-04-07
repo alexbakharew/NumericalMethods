@@ -7,19 +7,19 @@ class LU
 public:
     LU(){}
     LU(const Matrix& A);
-    LU(const Matrix& L, const Matrix& U, const std::vector<int> p);
+    LU(const Matrix& L, const Matrix& U, const std::vector<double> p);
     ~LU();
 public:
-    double Determinator();
+    double Determinator() const;
     Matrix Reverse() const;
-    std::vector<double> SolveEqutation(const std::vector<double>& b);
+    Vector SolveEqutation(const Vector& b) const;
     Matrix GetL() const;
     Matrix GetU() const;
-    std::vector<int> GetP() const;
+    Vector GetP() const;
 private:
     Matrix L;
     Matrix U;
-    std::vector<int> P;
+    std::vector<double> P;
     uint32_t dim;
 };
 

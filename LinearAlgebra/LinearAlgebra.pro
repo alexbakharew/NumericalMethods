@@ -9,10 +9,12 @@ SOURCES += \
     matrix.cpp \
     lu.cpp \
     tridiagonal.cpp \
-    logger.cpp
+    logger.cpp \
+    simpleiteration.cpp
 
 HEADERS += \
     matrix.h \
     lu.h \
     tridiagonal.h \
-    logger.h
+    logger.h \
+    simpleiteration.h

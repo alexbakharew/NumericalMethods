@@ -1,6 +1,6 @@
 #include "tridiagonal.h"
 #include "matrix.h"
-Tridiagonal::Tridiagonal(Matrix& m) : dim(m.GetDim())
+Tridiagonal::Tridiagonal(const Matrix &m) : dim(m.GetDim())
 {
     coeffs.resize(dim);
     coeffs[0].push_back(m[0][0]);
@@ -19,7 +19,7 @@ Tridiagonal::Tridiagonal(Matrix& m) : dim(m.GetDim())
     }
 
 }
-std::vector<double> Tridiagonal::SolveEqutation(const std::vector<double> &d)
+Vector Tridiagonal::SolveEqutation(const std::vector<double> &d)
 {
 //    coeffs[i][0] = a_i;
 //    coeffs[i][1] = b_i;
@@ -55,5 +55,5 @@ std::vector<double> Tridiagonal::SolveEqutation(const std::vector<double> &d)
                 + (d[i] - coeffs[i][0] * Q[i - 1]) / (coeffs[i][1] + coeffs[i][0] * P[i - 1]);
     }
     x[0] = P[0] * x[1] + Q[0];
-    return x;
+    return Vector(x);
 }
