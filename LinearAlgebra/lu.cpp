@@ -123,7 +123,8 @@ Matrix LU::Reverse() const
     {
         m.push_back(SolveEqutation(Vector(E[i])));
     }
-    return Matrix(m, dim).Transposing();
+    Matrix res =  Matrix(m, dim);
+    return res.Transposing();
 }
 
 

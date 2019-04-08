@@ -43,6 +43,8 @@ void MakeLU()
     Matrix mult = L * U;
     mult.Permutation(P);
     out << "Matrix L * U * P\n" << mult << std::endl;
+    out << "Reversed matrix \n" << lu.Reverse() << std::endl;
+    out << "A * A^-1 \n" << lu.Reverse() * lu.GetL() * lu.GetU() << std::endl;
     Vector b;
     in >> b;
     auto solve = lu.SolveEqutation(b);
@@ -59,7 +61,9 @@ void MakeTridiagonal()
 
     Matrix m;
     in >> m;
+    out << "Matrix M\n" << m << std::endl;
     Tridiagonal td(m);
+    out << "b = 6 3 8 5" << std::endl;
     Vector x = td.SolveEqutation(std::vector<double>{6, 3, 8, 5});
     out << "x = " << x << std::endl;
     std::cout << "OK\n";
@@ -78,9 +82,9 @@ void MakeSimpleIteration()
     long double epsilon;
 
     in >> A >> b >> epsilon;
-
+    out << "matrix A\n" << A << "b = " << b << "\n" << "epsilon " << epsilon << "\n";
     Vector res = SimpleIteration::SolveEqutation(A, b, epsilon);
-    out << res;
+    out << "res " << res;
     std::cout << "OK" << std::endl;
     return;
 }
@@ -98,9 +102,9 @@ void MakeZeydel()
     long double epsilon;
 
     in >> A >> b >> epsilon;
-
+    out << "matrix A\n" << A << "b = " << b << "\n" << "epsilon " << epsilon << "\n";
     Vector res = Zeydel::SolveEqutation(A, b, epsilon);
-    out << res;
+    out <<"res " << res;
     std::cout << "OK" << std::endl;
     return;
 }
@@ -134,7 +138,8 @@ int main()
             Matrix m;
             std::cin >> m;
             LU lu(m);
-            std::cout << lu.Reverse() << std::endl;
+            Matrix reverse = lu.Reverse();
+            std::cout << reverse << std::endl;
             std::cout << m * lu.Reverse() << std::endl;
             break;
         }

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 #include "matrix.h"
 #include "simpleiteration.h"
 Vector SimpleIteration::SolveEqutation(const Matrix& A, const Vector& b, long double epsilon)
@@ -18,10 +19,15 @@ Vector SimpleIteration::SolveEqutation(const Matrix& A, const Vector& b, long do
             Alpha[i][j] = - (A[i][j] / A[i][i]);
         }
     }
-    long double coeff = Alpha.Norm() / (1 - Alpha.Norm());
+    long double coeff;
+    if(Alpha.Norm() == 1)
+        coeff = 1;
+    else
+        coeff = Alpha.Norm()/ (1 - Alpha.Norm());
+
     Vector curr_x = Beta + Alpha * Beta;
     long double curr_epsilon = (curr_x - Beta).Norm() * coeff;
-    while(curr_epsilon > epsilon)
+    while(fabs(curr_epsilon) > epsilon)
     {
         Vector next_x = Beta + Alpha * curr_x;
         curr_epsilon = (next_x - curr_x).Norm() * coeff;
@@ -47,7 +53,12 @@ Vector Zeydel::SolveEqutation(const Matrix &A, const Vector &b, long double epsi
             Alpha[i][j] = - (A[i][j] / A[i][i]);
         }
     }
-    long double coeff = Alpha.Norm() / (1 - Alpha.Norm());
+    long double coeff;
+    if(Alpha.Norm() == 1)
+        coeff = 1;
+    else
+        coeff = Alpha.Norm()/ (1 - Alpha.Norm());
+
     Vector curr_x = Beta;
     long double curr_epsilon;
     do
@@ -68,6 +79,6 @@ Vector Zeydel::SolveEqutation(const Matrix &A, const Vector &b, long double epsi
         curr_epsilon = coeff * (next_x - curr_x).Norm();
         curr_x = next_x;
     }
-    while(curr_epsilon > epsilon);
+    while(fabs(curr_epsilon) > epsilon);
     return curr_x;
 }

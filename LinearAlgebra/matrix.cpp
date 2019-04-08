@@ -20,7 +20,7 @@ Matrix::Matrix(uint32_t size, double val)
     matrix = std::vector<std::vector<double>> (dim, std::vector<double>(dim, val));
 }
 
-Matrix::Matrix(const std::vector<Vector> v, size_t dim)
+Matrix::Matrix(const std::vector<Vector> v, size_t size) : dim(size)
 {
     matrix.resize(dim);
     for(int i = 0; i < dim; ++i)
