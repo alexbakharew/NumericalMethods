@@ -18,7 +18,7 @@ bool CheckFile(const std::fstream& file, const std::string& name)
 bool OpenFiles(std::fstream& in, std::fstream& out, const std::string& in_file, const std::string& out_file)
 {
     in = std::fstream(in_file);
-    out = std::fstream(out_file);
+    out = std::fstream(out_file, std::fstream::out);
     return CheckFile(in, in_file) && CheckFile(out, out_file);
 }
 
@@ -87,7 +87,22 @@ void MakeSimpleIteration()
 
 void MakeZeydel()
 {
+    std::fstream in;
+    std::fstream out;
 
+    if(!OpenFiles(in, out, "../LinearAlgebra/Input/zeydel/1.txt", "../LinearAlgebra/Output/zeydel.txt"))
+        return;
+
+    Matrix A;
+    Vector b;
+    long double epsilon;
+
+    in >> A >> b >> epsilon;
+
+    Vector res = Zeydel::SolveEqutation(A, b, epsilon);
+    out << res;
+    std::cout << "OK" << std::endl;
+    return;
 }
 
 int main()
@@ -129,6 +144,7 @@ int main()
             MakeLU();
             MakeTridiagonal();
             MakeSimpleIteration();
+            MakeZeydel();
         }
     }
 
