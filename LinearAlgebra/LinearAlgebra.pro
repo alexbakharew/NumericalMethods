@@ -1,5 +1,5 @@
 TEMPLATE = app
-CONFIG += console c++11
+CONFIG += console c++17
 CONFIG += -std=c++17
 CONFIG -= app_bundle
 CONFIG -= qt
@@ -10,11 +10,13 @@ SOURCES += \
     lu.cpp \
     tridiagonal.cpp \
     logger.cpp \
-    simpleiteration.cpp
+    eigenvalues.cpp \
+    equtationsolver.cpp
 
 HEADERS += \
     matrix.h \
     lu.h \
     tridiagonal.h \
     logger.h \
-    simpleiteration.h
+    eigenvalues.h \
+    equtationsolver.h

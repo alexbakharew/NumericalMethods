@@ -3,6 +3,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <variant>
+#include <cassert>
 class Vector;
 class Matrix
 {
@@ -17,8 +19,12 @@ public:
     friend std::ostream& operator << (std::ostream& os, const Matrix& m);
     friend std::istream& operator >> (std::istream& is, Matrix& m);
     void operator = (const Matrix& other);
-    Matrix operator * (const Matrix& other);
-    Vector operator * (const Vector& other);
+    Matrix operator + (const Matrix& other) const;
+    Matrix operator - (const Matrix& other) const;
+    Matrix operator * (const Matrix& other) const;
+    Matrix operator * (double val) const;
+    Vector operator * (const Vector& other) const;
+    Matrix operator / (double val) const;
     const std::vector<double>& operator[] (uint32_t idx) const;
     std::vector<double>& operator[] (uint32_t idx);
 
@@ -36,7 +42,7 @@ protected:
 class Vector
 {
 public:
-    Vector(){}
+    Vector();
     Vector(uint32_t size);
     Vector(uint32_t size, double val);
     Vector(const std::vector<double>& other);
@@ -45,6 +51,7 @@ public:
     Vector operator + (const Vector& other);
     Vector operator - (const Vector& other);
     Vector operator * (long double num) const;
+    std::variant<Matrix, double> operator * (const Vector& right);
     double& operator [] (uint32_t idx);
     const double& operator [] (uint32_t idx) const;
     friend std::ostream& operator << (std::ostream& os, const Vector& v);
@@ -52,8 +59,11 @@ public:
 
     inline size_t GetDim() const {return buffer.size();}
     long double Norm();
+    Vector Transposed() const;
+    bool IsTransposed();
     friend class Matrix;
-protected:
+private:
+    bool is_transposed;
     std::vector<double> buffer;
     uint32_t dim;
 };

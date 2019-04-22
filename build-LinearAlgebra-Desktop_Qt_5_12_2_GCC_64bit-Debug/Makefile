@@ -16,7 +16,7 @@ CC            = gcc
 CXX           = g++
 DEFINES       = -DQT_QML_DEBUG
 CFLAGS        = -pipe -g -Wall -W -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -g -std=gnu++11 -Wall -W -fPIC $(DEFINES)
+CXXFLAGS      = -pipe -g -std=gnu++1z -Wall -W -fPIC $(DEFINES)
 INCPATH       = -I../LinearAlgebra -I. -I/opt/Qt/5.12.2/gcc_64/mkspecs/linux-g++
 QMAKE         = /opt/Qt/5.12.2/gcc_64/bin/qmake
 DEL_FILE      = rm -f
@@ -56,12 +56,14 @@ SOURCES       = ../LinearAlgebra/main.cpp \
 		../LinearAlgebra/lu.cpp \
 		../LinearAlgebra/tridiagonal.cpp \
 		../LinearAlgebra/logger.cpp \
-		../LinearAlgebra/simpleiteration.cpp 
+		../LinearAlgebra/eigenvalues.cpp \
+		../LinearAlgebra/equtationsolver.cpp 
 OBJECTS       = main.o \
 		lu.o \
 		tridiagonal.o \
 		logger.o \
-		simpleiteration.o
+		eigenvalues.o \
+		equtationsolver.o
 DIST          = /opt/Qt/5.12.2/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt/5.12.2/gcc_64/mkspecs/common/unix.conf \
 		/opt/Qt/5.12.2/gcc_64/mkspecs/common/linux.conf \
@@ -235,11 +237,13 @@ DIST          = /opt/Qt/5.12.2/gcc_64/mkspecs/features/spec_pre.prf \
 		lu.h \
 		tridiagonal.h \
 		logger.h \
-		simpleiteration.h ../LinearAlgebra/main.cpp \
+		eigenvalues.h \
+		equtationsolver.h ../LinearAlgebra/main.cpp \
 		../LinearAlgebra/lu.cpp \
 		../LinearAlgebra/tridiagonal.cpp \
 		../LinearAlgebra/logger.cpp \
-		../LinearAlgebra/simpleiteration.cpp
+		../LinearAlgebra/eigenvalues.cpp \
+		../LinearAlgebra/equtationsolver.cpp
 QMAKE_TARGET  = LinearAlgebra
 DESTDIR       = 
 TARGET        = LinearAlgebra
@@ -639,7 +643,7 @@ main.o: ../LinearAlgebra/main.cpp ../LinearAlgebra/matrix.cpp \
 		../LinearAlgebra/matrix.h \
 		../LinearAlgebra/lu.h \
 		../LinearAlgebra/tridiagonal.h \
-		../LinearAlgebra/simpleiteration.h
+		../LinearAlgebra/equtationsolver.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../LinearAlgebra/main.cpp
 
 lu.o: ../LinearAlgebra/lu.cpp ../LinearAlgebra/lu.h \
@@ -657,9 +661,12 @@ logger.o: ../LinearAlgebra/logger.cpp ../LinearAlgebra/logger.h \
 		../LinearAlgebra/tridiagonal.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o logger.o ../LinearAlgebra/logger.cpp
 
-simpleiteration.o: ../LinearAlgebra/simpleiteration.cpp ../LinearAlgebra/matrix.h \
-		../LinearAlgebra/simpleiteration.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o simpleiteration.o ../LinearAlgebra/simpleiteration.cpp
+eigenvalues.o: ../LinearAlgebra/eigenvalues.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o eigenvalues.o ../LinearAlgebra/eigenvalues.cpp
+
+equtationsolver.o: ../LinearAlgebra/equtationsolver.cpp ../LinearAlgebra/matrix.h \
+		../LinearAlgebra/equtationsolver.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o equtationsolver.o ../LinearAlgebra/equtationsolver.cpp
 
 ####### Install
 

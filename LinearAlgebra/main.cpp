@@ -3,7 +3,8 @@
 #include "matrix.cpp"
 #include "lu.h"
 #include "tridiagonal.h"
-#include "simpleiteration.h"
+#include "equtationsolver.h"
+#include "eigenvalues.h"
 bool CheckFile(const std::fstream& file, const std::string& name)
 {
     if(!file.is_open())
@@ -74,7 +75,7 @@ void MakeSimpleIteration()
     std::fstream in;
     std::fstream out;
 
-    if(!OpenFiles(in, out, "../LinearAlgebra/Input/simpleiteration/1.txt", "../LinearAlgebra/Output/sim_iter.txt"))
+    if(!OpenFiles(in, out, "../LinearAlgebra/Input/solverequtation/1.txt", "../LinearAlgebra/Output/sim_iter.txt"))
         return;
 
     Matrix A;
@@ -94,7 +95,7 @@ void MakeZeydel()
     std::fstream in;
     std::fstream out;
 
-    if(!OpenFiles(in, out, "../LinearAlgebra/Input/zeydel/1.txt", "../LinearAlgebra/Output/zeydel.txt"))
+    if(!OpenFiles(in, out, "../LinearAlgebra/Input/solverequtation/1.txt", "../LinearAlgebra/Output/zeydel.txt"))
         return;
 
     Matrix A;
@@ -109,9 +110,44 @@ void MakeZeydel()
     return;
 }
 
+void MakeRotationMethod()
+{
+    std::fstream in;
+    std::fstream out;
+
+    if(!OpenFiles(in, out, "../LinearAlgebra/Input/eigenvalues/2.txt", "../LinearAlgebra/Output/rotation.txt"))
+        return;
+
+    Matrix A;
+    double epsilon;
+
+    in >> A >> epsilon;
+    out << "matrix A\n" << A  << "epsilon " << epsilon << "\n";
+    auto res = RotationMethod::FindEigenvalues(A, epsilon);
+    out <<"res " << Vector(res);
+    std::cout << "OK" << std::endl;
+    return;
+}
+void MakeQR()
+{
+    std::fstream in;
+    std::fstream out;
+
+    if(!OpenFiles(in, out, "../LinearAlgebra/Input/eigenvalues/qr/1.txt", "../LinearAlgebra/Output/qr.txt"))
+        return;
+
+    Matrix A;
+    double epsilon;
+
+    in >> A >> epsilon;
+    out << "matrix A\n" << A  << "epsilon " << epsilon << "\n";
+    auto res = QR::FindEigenvalues(A);
+    out <<"res " << Vector(res);
+    std::cout << "OK" << std::endl;
+}
 int main()
 {
-    int method = -1;
+    int method = 10;
 
     switch(method)
     {
@@ -132,15 +168,26 @@ int main()
             MakeSimpleIteration();
             break;
         }
-
+        case 3:
+        {
+            MakeZeydel();
+            break;
+        }
+        case 4:
+        {
+            MakeRotationMethod();
+            break;
+        }
+        case 5:
+        {
+            MakeQR();
+            break;
+        }
         case 10:
         {
-            Matrix m;
-            std::cin >> m;
-            LU lu(m);
-            Matrix reverse = lu.Reverse();
-            std::cout << reverse << std::endl;
-            std::cout << m * lu.Reverse() << std::endl;
+            Matrix Q, R;
+            std::cin >> Q >> R;
+            std::cout << Q * R << std::endl;
             break;
         }
 
