@@ -5,11 +5,14 @@
 class EqutationSolver
 {
 public:
-    EqutationSolver(double a, double b);
-    ~EqutationSolver();
+    EqutationSolver(){}
+    EqutationSolver(double left_margin, double right_margin);
+    ~EqutationSolver(){}
     double NewtonMethod(double epsilon);
     double SimpleIterationMethod(double epsilon);
-    double Function(double x) {return x;} // Place your function here
+    double Function(double x); // Place your function here
+    double FirstDerivation(double x);
+    double SecondDerivation(double x);
 private:
     double a;
     double b;

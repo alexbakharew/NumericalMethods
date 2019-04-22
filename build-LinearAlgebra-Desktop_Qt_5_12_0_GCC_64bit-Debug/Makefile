@@ -54,12 +54,14 @@ SOURCES       = ../LinearAlgebra/main.cpp \
 		../LinearAlgebra/lu.cpp \
 		../LinearAlgebra/tridiagonal.cpp \
 		../LinearAlgebra/logger.cpp \
-		../LinearAlgebra/simpleiteration.cpp 
+		../LinearAlgebra/eigenvalues.cpp \
+		../LinearAlgebra/equtationsolver.cpp 
 OBJECTS       = main.o \
 		lu.o \
 		tridiagonal.o \
 		logger.o \
-		simpleiteration.o
+		eigenvalues.o \
+		equtationsolver.o
 DIST          = ../../../Qt/5.12.0/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../Qt/5.12.0/gcc_64/mkspecs/common/unix.conf \
 		../../../Qt/5.12.0/gcc_64/mkspecs/common/linux.conf \
@@ -232,6 +234,7 @@ DIST          = ../../../Qt/5.12.0/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../Qt/5.12.0/gcc_64/mkspecs/features/qt_config.prf \
 		../../../Qt/5.12.0/gcc_64/mkspecs/linux-g++/qmake.conf \
 		../../../Qt/5.12.0/gcc_64/mkspecs/features/spec_post.prf \
+		../LinearAlgebra/.qmake.stash \
 		../../../Qt/5.12.0/gcc_64/mkspecs/features/exclusive_builds.prf \
 		../../../Qt/5.12.0/gcc_64/mkspecs/features/toolchain.prf \
 		../../../Qt/5.12.0/gcc_64/mkspecs/features/default_pre.prf \
@@ -249,11 +252,13 @@ DIST          = ../../../Qt/5.12.0/gcc_64/mkspecs/features/spec_pre.prf \
 		lu.h \
 		tridiagonal.h \
 		logger.h \
-		simpleiteration.h ../LinearAlgebra/main.cpp \
+		eigenvalues.h \
+		equtationsolver.h ../LinearAlgebra/main.cpp \
 		../LinearAlgebra/lu.cpp \
 		../LinearAlgebra/tridiagonal.cpp \
 		../LinearAlgebra/logger.cpp \
-		../LinearAlgebra/simpleiteration.cpp
+		../LinearAlgebra/eigenvalues.cpp \
+		../LinearAlgebra/equtationsolver.cpp
 QMAKE_TARGET  = LinearAlgebra
 DESTDIR       = 
 TARGET        = LinearAlgebra
@@ -437,6 +442,7 @@ Makefile: ../LinearAlgebra/LinearAlgebra.pro ../../../Qt/5.12.0/gcc_64/mkspecs/l
 		../../../Qt/5.12.0/gcc_64/mkspecs/features/qt_config.prf \
 		../../../Qt/5.12.0/gcc_64/mkspecs/linux-g++/qmake.conf \
 		../../../Qt/5.12.0/gcc_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../Qt/5.12.0/gcc_64/mkspecs/features/exclusive_builds.prf \
 		../../../Qt/5.12.0/gcc_64/mkspecs/features/toolchain.prf \
 		../../../Qt/5.12.0/gcc_64/mkspecs/features/default_pre.prf \
@@ -624,6 +630,7 @@ Makefile: ../LinearAlgebra/LinearAlgebra.pro ../../../Qt/5.12.0/gcc_64/mkspecs/l
 ../../../Qt/5.12.0/gcc_64/mkspecs/features/qt_config.prf:
 ../../../Qt/5.12.0/gcc_64/mkspecs/linux-g++/qmake.conf:
 ../../../Qt/5.12.0/gcc_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../Qt/5.12.0/gcc_64/mkspecs/features/exclusive_builds.prf:
 ../../../Qt/5.12.0/gcc_64/mkspecs/features/toolchain.prf:
 ../../../Qt/5.12.0/gcc_64/mkspecs/features/default_pre.prf:
@@ -685,7 +692,8 @@ main.o: ../LinearAlgebra/main.cpp ../LinearAlgebra/matrix.cpp \
 		../LinearAlgebra/matrix.h \
 		../LinearAlgebra/lu.h \
 		../LinearAlgebra/tridiagonal.h \
-		../LinearAlgebra/simpleiteration.h
+		../LinearAlgebra/equtationsolver.h \
+		../LinearAlgebra/eigenvalues.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../LinearAlgebra/main.cpp
 
 lu.o: ../LinearAlgebra/lu.cpp ../LinearAlgebra/lu.h \
@@ -703,9 +711,13 @@ logger.o: ../LinearAlgebra/logger.cpp ../LinearAlgebra/logger.h \
 		../LinearAlgebra/tridiagonal.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o logger.o ../LinearAlgebra/logger.cpp
 
-simpleiteration.o: ../LinearAlgebra/simpleiteration.cpp ../LinearAlgebra/matrix.h \
-		../LinearAlgebra/simpleiteration.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o simpleiteration.o ../LinearAlgebra/simpleiteration.cpp
+eigenvalues.o: ../LinearAlgebra/eigenvalues.cpp ../LinearAlgebra/eigenvalues.h \
+		../LinearAlgebra/matrix.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o eigenvalues.o ../LinearAlgebra/eigenvalues.cpp
+
+equtationsolver.o: ../LinearAlgebra/equtationsolver.cpp ../LinearAlgebra/matrix.h \
+		../LinearAlgebra/equtationsolver.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o equtationsolver.o ../LinearAlgebra/equtationsolver.cpp
 
 ####### Install
 
