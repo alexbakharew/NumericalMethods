@@ -115,5 +115,6 @@ std::vector<double> QR::FindEigenvalues(const Matrix& m, const double epsilon)
     double curr_epsilon;
 
     std::array<Matrix, 2> qr = QR::FindQR(A);
-
+    std::cout << qr[0] << " " << qr[1] << std::endl;
+    return std::vector<double> {1, 2};
 }

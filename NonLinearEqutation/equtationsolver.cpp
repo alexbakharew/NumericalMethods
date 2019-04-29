@@ -10,7 +10,7 @@ double EqutationSolver::Function(const double x)
     double res;
     try
     {
-        res = sqrt(1 - x * x) - exp(x) + 0.01;
+        res = sqrt(1 - x * x) - exp(x) + 0.1;
     }
     catch (const std::exception& e)
     {
@@ -19,12 +19,12 @@ double EqutationSolver::Function(const double x)
     }
     return res;
 }
-double EqutationSolver::FirstDerivation(double x)
+double EqutationSolver::FirstDerivation(const double x)
 {
     double res;
     try
     {
-        res = - ((1 / sqrt(1 - x * x)) + exp(x));
+        res = - ((x / sqrt(1 - x * x)) + exp(x));
     }
     catch (const std::exception& e)
     {
@@ -38,7 +38,7 @@ double EqutationSolver::SecondDerivation(const double x)
     double res;
     try
     {
-        res = - (sqrt(pow((1 - x * x), 3)) + exp(x));
+        res = - (1 / sqrt(1 -  x * x)) - x * x * (1 / sqrt(pow(1 - x * x, 3))) - exp(x);
     }
     catch (const std::exception& e)
     {
@@ -47,12 +47,13 @@ double EqutationSolver::SecondDerivation(const double x)
     }
     return res;
 }
-double EqutationSolver::NewtonMethod(double epsilon)
+double EqutationSolver::NewtonMethod(const double epsilon)
 {
     double x_0;
-    for(double i = a; i < b; i += epsilon)
+    for(double i = a; i <= b; i += epsilon)
     {
-        if(Function(i) * SecondDerivation(i) < 0)
+        if((FirstDerivation(i) > 0 && (Function(i) * SecondDerivation(i) <= 0))
+            || (FirstDerivation(i) < 0 && (Function(i) * SecondDerivation(i)) >= 0))
         {
             x_0 = i;
             break;
@@ -69,4 +70,20 @@ double EqutationSolver::NewtonMethod(double epsilon)
     }
     while(fabs(curr_epsilon) > fabs(epsilon));
     return curr_x;
+}
+double func(double x)
+{
+    return sqrt(0.2 * exp(x) - exp(2 * x) + 0.99);
+}
+double EqutationSolver::SimpleIterationMethod(const double epsilon)
+{
+    int x = (a + b) / 2;
+    double curr_epsilon;
+    do
+    {
+        double val = func(x);
+        curr_epsilon = fabs(val - x);
+        x = val;
+    }
+    while(curr_epsilon > epsilon);
 }

@@ -141,13 +141,13 @@ void MakeQR()
 
     in >> A >> epsilon;
     out << "matrix A\n" << A  << "epsilon " << epsilon << "\n";
-    auto res = QR::FindEigenvalues(A);
+    auto res = QR::FindEigenvalues(A, 0.1);
     out <<"res " << Vector(res);
     std::cout << "OK" << std::endl;
 }
 int main()
 {
-    int method = 10;
+    int method = 5;
 
     switch(method)
     {
