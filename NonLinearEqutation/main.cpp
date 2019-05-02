@@ -11,7 +11,7 @@ int main()
     //--------------------------------------------------------
 
     EqutationSolver instance3(-0.4, -0.3);
-    std::cout << instance1.SimpleIterationMethod(0.00001) << std::endl;
+//    std::cout << instance1.SimpleIterationMethod(0.00001) << std::endl;
 //    std::cout << instance.SimpleIterationMethod(0.01) << std::endl;
     return 0;
 }

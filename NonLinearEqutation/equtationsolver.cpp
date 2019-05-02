@@ -52,8 +52,7 @@ double EqutationSolver::NewtonMethod(const double epsilon)
     double x_0;
     for(double i = a; i <= b; i += epsilon)
     {
-        if((FirstDerivation(i) > 0 && (Function(i) * SecondDerivation(i) <= 0))
-            || (FirstDerivation(i) < 0 && (Function(i) * SecondDerivation(i)) >= 0))
+        if(SecondDerivation(i) * Function(i) > 0)
         {
             x_0 = i;
             break;

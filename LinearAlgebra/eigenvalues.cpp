@@ -1,6 +1,8 @@
 #include <cmath>
+#include "complex.h"
 #include "eigenvalues.h"
 inline int sign(double val) {return val < 0 ? -1 : 1;}
+
 std::vector<double> RotationMethod::FindEigenvalues(const Matrix& m, const double epsilon)
 {
     Matrix A = m;
@@ -27,11 +29,11 @@ std::vector<double> RotationMethod::FindEigenvalues(const Matrix& m, const doubl
         {
             U[k][k] = 1;
         }
-        double fi = 0.5 * atanf(2 * A[x][y] / (A[x][x] - A[y][y]));
-        U[x][x] = cosf(fi);
-        U[x][y] = -sinf(fi);
-        U[y][x] = sinf(fi);
-        U[y][y] = cosf(fi);
+        double fi = 0.5 * atan(2 * A[x][y] / (A[x][x] - A[y][y]));
+        U[x][x] = cos(fi);
+        U[x][y] = -sin(fi);
+        U[y][x] = sin(fi);
+        U[y][y] = cos(fi);
 
         A = U.Transposing() * A * U;
 
@@ -43,7 +45,7 @@ std::vector<double> RotationMethod::FindEigenvalues(const Matrix& m, const doubl
                 curr_epsilon += A[t][r] * A[t][r];
             }
         }
-        curr_epsilon = sqrtf(curr_epsilon);
+        curr_epsilon = sqrt(curr_epsilon);
     }
     while(curr_epsilon > epsilon);
     std::vector<double> res(dim);
@@ -97,24 +99,67 @@ std::array<Matrix, 2> QR::FindQR(const Matrix &m)
         }
         A = H * A;
     }
-    std::cout << Q << "\n" << A << std::endl;
-    std::cout << Q * A << std::endl;
     return std::array<Matrix, 2>{Q, A};
 }
-double QR::GetEpsilon(const Matrix& A)
+
+std::vector<Complex> QR::SquareEqutation(double x_11, double x_12, double x_21, double x_22)
 {
-    double res = 0;
-    for(int i  = 0; i < A.GetDim(); ++i)
+    std::vector<Complex> res;
+    double a = 1;
+    double b = x_11 * x_22;
+    double c = (x_11 * x_22) - (x_21 * x_22);
+    double D = - b * b - 4 * a * c;
+    if(D > 0)
     {
-        res += A[0][i] * A[0][i];
+        res.reserve(2);
+        res[0] = ((- b) + sqrt(D)) / 2 * a;
+        res[1] = ((- b) - sqrt(D)) / 2 * a;
+    }
+    else if(D == 0)
+    {
+        res.push_back((- b) / 2 * a);
+    }
+    else
+    {
+
     }
 }
 std::vector<double> QR::FindEigenvalues(const Matrix& m, const double epsilon)
 {
     Matrix A = m;
-    double curr_epsilon;
+    auto get_epsilon = [&]()
+    {
+        double res = 0;
+        for(int i = 0; i < A.GetDim(); ++i)
+        {
+            res += A[i][0] * A[i][0];
+        }
+        return sqrt(res);
+    };
 
-    std::array<Matrix, 2> qr = QR::FindQR(A);
-    std::cout << qr[0] << " " << qr[1] << std::endl;
-    return std::vector<double> {1, 2};
+    double curr_epsilon = get_epsilon();
+    while(curr_epsilon > epsilon)
+    {
+        std::array<Matrix, 2> qr = QR::FindQR(A);
+        A = qr[0] * qr[1];
+        curr_epsilon = get_epsilon();
+    }
+    std::vector<Complex> res;
+    for(int i = 0; i < A.GetDim(); ++i)
+    {
+
+        if(i == A.GetDim() - 1)
+        {
+            //do something
+//            return;
+        }
+        if(A[i + 1][i] > epsilon)//complex value
+        {
+
+        }
+        else
+        {
+            res.push_back(Complex(A[i][i]));
+        }
+    }
 }
