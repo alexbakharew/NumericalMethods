@@ -122,8 +122,8 @@ std::vector<Complex> QR::SquareEqutation(double x_11, double x_12, double x_21, 
     else
     {
         res.reserve(2);
-        res[0] = (Complex(D).sqrtc() / (2 * a)) + (-b / 2 * a);
-        res[1] = (Complex(D).sqrtc() / (2 * a)) + (-b / 2 * a);
+        res[0] = (- b + Complex(D).sqrtc()) / (2 * a);
+        res[1] = (- b - Complex(D).sqrtc()) / (2 * a);
 
     }
 }
@@ -153,12 +153,12 @@ std::vector<double> QR::FindEigenvalues(const Matrix& m, const double epsilon)
 
         if(i == A.GetDim() - 1)
         {
-            //do something
-//            return;
+            //double value
         }
         if(A[i + 1][i] > epsilon)//complex value
         {
 
+            i += 1;
         }
         else
         {
