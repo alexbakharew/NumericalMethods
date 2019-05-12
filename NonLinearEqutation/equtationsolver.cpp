@@ -72,7 +72,7 @@ double EqutationSolver::NewtonMethod(const double epsilon)
 }
 double func(double x)
 {
-    return sqrt(0.2 * exp(x) - exp(2 * x) + 0.99);
+    return log(sqrt(1 - x * x) + 0.1);
 }
 double EqutationSolver::SimpleIterationMethod(const double epsilon)
 {

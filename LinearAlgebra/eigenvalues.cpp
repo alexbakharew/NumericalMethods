@@ -108,7 +108,7 @@ std::vector<Complex> QR::SquareEqutation(double x_11, double x_12, double x_21, 
     double a = 1;
     double b = x_11 * x_22;
     double c = (x_11 * x_22) - (x_21 * x_22);
-    double D = - b * b - 4 * a * c;
+    double D = b * b - 4 * a * c;
     if(D > 0)
     {
         res.reserve(2);
@@ -121,6 +121,9 @@ std::vector<Complex> QR::SquareEqutation(double x_11, double x_12, double x_21, 
     }
     else
     {
+        res.reserve(2);
+        res[0] = (Complex(D).sqrtc() / (2 * a)) + (-b / 2 * a);
+        res[1] = (Complex(D).sqrtc() / (2 * a)) + (-b / 2 * a);
 
     }
 }
