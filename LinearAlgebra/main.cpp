@@ -5,6 +5,7 @@
 #include "tridiagonal.h"
 #include "equtationsolver.h"
 #include "eigenvalues.h"
+#include "complex.h"
 bool CheckFile(const std::fstream& file, const std::string& name)
 {
     if(!file.is_open())
@@ -141,8 +142,13 @@ void MakeQR()
 
     in >> A >> epsilon;
     out << "matrix A\n" << A  << "epsilon " << epsilon << "\n";
-    auto res = QR::FindEigenvalues(A, 0.1);
-//    out <<"res " << Vector(res);
+    QR qr;
+    auto res = qr.FindEigenvalues(A, epsilon);
+    for(auto i : res)
+    {
+        out << i << " ";
+    }
+    out << "\n";
     std::cout << "OK" << std::endl;
 }
 int main()
@@ -185,9 +191,17 @@ int main()
         }
         case 10:
         {
-            Matrix Q, R;
-            std::cin >> Q >> R;
-            std::cout << Q * R << std::endl;
+//            auto res = SquareEqutation(-2.01, -2.58, 0.98, -1.33);
+//            for(auto i : res)
+//            {
+//                std::cout << i << std::endl;
+//            }
+            std::cout << Complex(1,1) << std::endl;
+            std::cout << Complex(-1,1) << std::endl;
+            std::cout << Complex(1,-1) << std::endl;
+            std::cout << Complex(-1,-1) << std::endl;
+            std::cout << Complex(1) << std::endl;
+            std::cout << Complex(-1) << std::endl;
             break;
         }
 

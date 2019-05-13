@@ -17,6 +17,9 @@ def rhs_func(x):
 def fi(x):
     return np.log(np.sqrt(1 - x ** 2) + 0.1)
 
+def fi_d(x):
+    return (x * (1 - x ** 2)) / (np.sqrt(1 - x ** 2) + 0.1)
+
 def IncorrectUsage():
         print("Incorrect usage")
         print("python3 draw_plot.py <method>")
@@ -90,6 +93,25 @@ def main():
         plt.plot(x_value, y_value)
         plt.xlabel('x axis')
         plt.ylabel('fi(x) axis')
+        plt.show()
+    elif method == 4:
+        x_value = list()
+        y_value = list()
+        i = 0
+        while i < 0.15:
+            x_value.append(i)
+            y_value.append(fi_d(i))
+            i += 0.0001
+                    
+        x_1 = [-2, 2]
+        x_2 = [0, 0]
+        y_1 = [0, 0]
+        y_2 = [-5, 5]
+        plt.plot(y_1, y_2)
+        plt.plot(x_1, x_2)
+        plt.plot(x_value, y_value)
+        plt.xlabel('x axis')
+        plt.ylabel('fi_d(x) axis')
         plt.show()
 if __name__ == "__main__":
     main()

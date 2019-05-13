@@ -4,6 +4,7 @@
 #include "complex.h"
 #include <array>
 #include <vector>
+std::vector<Complex> SquareEqutation(double x_11, double x_12, double x_21, double x_22);
 class RotationMethod
 {
 public:
@@ -15,10 +16,10 @@ public:
 class QR
 {
 public:
-    static std::vector<double> FindEigenvalues(const Matrix& m, const double epsilon);
+    std::vector<Complex> FindEigenvalues(const Matrix& m, const double epsilon);
 private:
-    static std::array<Matrix, 2> FindQR(const Matrix& m);
-    std::vector<Complex> SquareEqutation(double a_11, double a_12, double a_21, double a_22);
+    std::array<Matrix, 2> FindQR(const Matrix& m);
+//    std::vector<Complex> SquareEqutation(double a_11, double a_12, double a_21, double a_22);
 };
 
 #endif // ROTATIONMETHOD_H

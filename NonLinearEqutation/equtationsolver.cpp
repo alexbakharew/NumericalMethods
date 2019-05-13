@@ -47,6 +47,7 @@ double EqutationSolver::SecondDerivation(const double x)
     }
     return res;
 }
+
 double EqutationSolver::NewtonMethod(const double epsilon)
 {
     double x_0;
@@ -70,18 +71,26 @@ double EqutationSolver::NewtonMethod(const double epsilon)
     while(fabs(curr_epsilon) > fabs(epsilon));
     return curr_x;
 }
+
 double func(double x)
 {
     return log(sqrt(1 - x * x) + 0.1);
 }
+
+double func_d(double x)
+{
+    return (x * (1 - x * x)) / (sqrt(1 - x * x) + 0.1);
+}
+
 double EqutationSolver::SimpleIterationMethod(const double epsilon)
 {
     int x = (a + b) / 2;
     double curr_epsilon;
+    double q = std::max(func_d(a), func_d(b));
     do
     {
         double val = func(x);
-        curr_epsilon = fabs(val - x);
+        curr_epsilon = fabs(val - x) * (q / 1 - q);
         x = val;
     }
     while(curr_epsilon > epsilon);
