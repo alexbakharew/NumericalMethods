@@ -3,10 +3,11 @@
 #include <memory>
 #include <string>
 #include <utility>
-
+#include <future>         // std::async, std::future
+#include <vector>
 // unmovable class with some big data
 class Param {
-protected:
+public:
     std::string str;
 public:
     Param() = delete;
@@ -47,19 +48,25 @@ public:
     MyClass(const MyClass &) = delete;
     MyClass & operator=(const MyClass &)= delete;
     
-    void operator()() {
-        std::cout << *ptr << std::endl;
+    std::unique_ptr<Param> operator()() 
+    {
+        ptr->str += std::string("JOPA\n");
+        return std::move(ptr);
     }
 
 };
 
-int main() {
+int main() 
+{
 
-    std::thread my_thread(std::move( // move thread
+    std::future<std::unique_ptr<Param>> my_thread = std::async(std::move( // move thread
                           MyClass(std::move( // move param of the thread
                                   std::unique_ptr<Param>( // create big object
                                      new Param("Hello world!"))))));
-    my_thread.join();
+    // std::unique_ptr<Param> param(new Param("HEllo World!"));
+
+    auto res = my_thread.get();
+    std::cout << res->str << std::endl;
     
     return 0;
 }
