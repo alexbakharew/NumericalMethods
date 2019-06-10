@@ -37,8 +37,8 @@ int main()
 {
     const long int task_size = 8;
     const long int count = 100000000;
+    
     std::vector<long int> vals1(task_size, 0);
-
     std::vector<long int> vals2(task_size, 0);
     std::vector<std::thread> threads(task_size);
 
