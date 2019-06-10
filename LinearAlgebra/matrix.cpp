@@ -78,7 +78,16 @@ std::istream& operator >> (std::istream& is, Matrix& m)
     }
     return is;
 }
-
+void Matrix::operator += (const Matrix& other) 
+{
+    for(int i = 0; i < dim; ++i)
+    {
+        for(int j = 0; j < dim; ++j)
+        {
+            matrix[i][j] += other[i][j];
+        }
+    }
+}
 Matrix Matrix::operator + (const Matrix& other) const
 {
     Matrix res(dim);

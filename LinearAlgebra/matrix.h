@@ -20,6 +20,7 @@ public:
     friend std::istream& operator >> (std::istream& is, Matrix& m);
     void operator = (const Matrix& other);
     Matrix operator + (const Matrix& other) const;
+    void operator += (const Matrix& other);
     Matrix operator - (const Matrix& other) const;
     Matrix operator * (const Matrix& other) const;
     Matrix operator * (double val) const;
