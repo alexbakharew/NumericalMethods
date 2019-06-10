@@ -6,4 +6,8 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
+        boostedmatrix.cpp \
         main.cpp
+
+HEADERS += \
+    boostedmatrix.h
